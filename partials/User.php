@@ -49,13 +49,52 @@ class User extends Database
 
 
   // function to get single row 
+  public function getRow($field, $value)
+  {
+    $sql = "SELECT * FROM {$this->tableName} WHERE {$field}=:{$field}";
+    $stmt=$this->conn->prepare($sql);
+    $stmt->execute();
+    if($stmt->rowCount() > 0){
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+      $result = [];
+    }
+    return $result;
+  }
 
 
   // function count number of rows 
-
+  public function getCount()
+  {
+    $sql = "SELECT * count(*) as pcount FROM {$this->tableName}";
+    $stmt=$this->conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['pcount'];
+  }
 
   // function to upload photo
+  public function uploadPhoto($file)
+  {
+    if(!empty($file)){
+      $fileTempPath = $file['tmp_name'];
+      $fileName = $file['name'];
+      $fileType = $file['type'];
+      $fileNameCmps = explode('.', $fileName);
+      $fileExtension = strtolower(end($fileNameCmps));
+      $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+      $allowedExtn = ["png", "jpg", "jpeg"];
 
+      if(in_array($fileExtension, $allowedExtn)){
+        $uploadFileDir = getcwd() . '/uploads/';
+        $destFilePath = $uploadFileDir . '/' . $newFileName;
+        if(move_uploaded_file($fileTempPath, $destFilePath)){
+          return $newFileName;
+        }
+      }
+      
+    }
+  }
 
   // function to update
 
