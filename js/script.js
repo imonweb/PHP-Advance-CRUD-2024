@@ -1,5 +1,6 @@
 $(document).ready(function() {
   // add user
+  // alert('hello');
   $(document).on("submit", "#addform", function(e){
     e.preventDefault();
     // ajax
