@@ -5,7 +5,7 @@ $(document).ready(function() {
     e.preventDefault();
     // ajax
     $.ajax({
-      url: "PHP_CRUD_2024/ajax.php",
+      url: "/php_crud_2024/ajax.php",
       type: "POST",
       dataType: "json",
       data: new FormData(this),

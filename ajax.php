@@ -1,5 +1,8 @@
 <?php 
 
+print_r($_FILES);
+die;
+
 $action = $_REQUEST['action'];
 
 if(!empty($action)){
